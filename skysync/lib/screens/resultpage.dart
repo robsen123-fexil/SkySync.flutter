@@ -18,11 +18,11 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
-   WeatherModel weathermodel = WeatherModel();
+  WeatherModel weathermodel = WeatherModel();
   int? tempreture;
-  int? feels;
-  double? max;
-  double? min;
+  double? feels;
+  int? maximum;
+  int? minimum;
   int? humudity;
   int? pressure;
   int? visiblity;
@@ -32,7 +32,6 @@ class _ResultPageState extends State<ResultPage> {
   String? weathericon;
   late int cond;
   @override
-  
   void initState() {
     super.initState();
     Updateui(widget.weatherdata);
@@ -42,8 +41,10 @@ class _ResultPageState extends State<ResultPage> {
     double temp = jsonDecode(weatherdata)['main']['temp'];
     tempreture = temp.toInt();
     feels = jsonDecode(weatherdata)['main']['feels_like'];
-    max = jsonDecode(weatherdata)['main']['temp_max'];
-    min = jsonDecode(weatherdata)['main']['temp_min'];
+    double max = jsonDecode(weatherdata)['main']['temp_max'];
+    maximum = max.toInt();
+    double min = jsonDecode(weatherdata)['main']['temp_min'];
+    minimum = min.toInt();
     humudity = jsonDecode(weatherdata)['main']['humidity'];
     visiblity = jsonDecode(weatherdata)['visibility'];
     speed = jsonDecode(weatherdata)['wind']['speed'];
@@ -51,8 +52,8 @@ class _ResultPageState extends State<ResultPage> {
     description = jsonDecode(weatherdata)['weather'][0]['description'];
     pressure = jsonDecode(weatherdata)['main']['pressure'];
     cond = jsonDecode(weatherdata)['weather'][0]['id'];
-   
-    weathericon=weathermodel.getWeatherIcon(cond);
+
+    weathericon = weathermodel.getWeatherIcon(cond);
   }
 
   @override
@@ -93,11 +94,11 @@ class _ResultPageState extends State<ResultPage> {
                 style: TextStyle(
                     fontSize: 60,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 255, 255, 255)),
+                    color: Color.fromARGB(255, 6, 6, 6)),
               ),
               Text("$description",
                   style: TextStyle(
-                      fontSize: 30, color: Color.fromARGB(255, 255, 255, 255))),
+                      fontSize: 30, color: Color.fromARGB(255, 0, 0, 0))),
               Row(
                 children: [
                   Expanded(
@@ -124,14 +125,15 @@ class _ResultPageState extends State<ResultPage> {
                             SizedBox(
                               height: 10,
                             ),
-                            Text("",
+                            Text("Condition",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20)),
                             SizedBox(
                               height: 10,
                             ),
                             Text(weathericon!,
-                                style: TextStyle(color: Colors.white, fontSize: 50)),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 50)),
                           ],
                         )),
                   ),
@@ -170,9 +172,9 @@ class _ResultPageState extends State<ResultPage> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text("$max",
+                                Text("$maximum°",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 15))
+                                        color: Colors.white, fontSize: 25))
                               ],
                             ),
                             SizedBox(height: 30),
@@ -195,9 +197,9 @@ class _ResultPageState extends State<ResultPage> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text("$min",
+                                Text("$minimum°",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 15))
+                                        color: Colors.white, fontSize: 25))
                               ],
                             ),
                           ],
@@ -278,7 +280,6 @@ class _ResultPageState extends State<ResultPage> {
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(20),
-                  
                 ),
                 child: Row(
                   children: [
@@ -297,9 +298,10 @@ class _ResultPageState extends State<ResultPage> {
                     //   Icons.icon,
                     //   size: 50,
                     //   color: Colors.yellow,
-                    // ), 
+                    // ),
                     Text(
-                      weathericon! , style: TextStyle(fontSize: 20),
+                      weathericon!,
+                      style: TextStyle(fontSize: 20),
                     ),
 
                     SizedBox(
