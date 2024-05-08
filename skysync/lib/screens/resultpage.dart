@@ -24,13 +24,24 @@ class _ResultPageState extends State<ResultPage> {
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(237, 6, 6, 0),
           elevation: 0,
-          title: Text(
-            "cityname",
-            style: TextStyle(
-                backgroundColor: Color.fromARGB(130, 50, 50, 50),
-                color: Color.fromARGB(255, 255, 255, 255)),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              
+              Icon(Icons.location_on), 
+              Text(
+              "cityname",
+              style: TextStyle(
+                  backgroundColor: Color.fromARGB(0, 50, 50, 50),
+                  color: Color.fromARGB(255, 255, 255, 255)),
+                  
+            ),
+            
+            SizedBox(width:10),
+            
+            ],
           ),
-          centerTitle: true,
+        
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -128,6 +139,7 @@ class _ResultPageState extends State<ResultPage> {
                 borderRadius: BorderRadius.circular(10),
                 
               ),
+              margin: EdgeInsets.all(10),
               height: 200,
               width: 200,
               child:Column(children: [
