@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: unused_import, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 
@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 import 'package:skysync/function/weathermap.dart';
 import 'package:skysync/screens/resultpage.dart';
 
-const api = 'aaee36e539a3634b5a211876369ca3d1';
+const apikey = 'aaee36e539a3634b5a211876369ca3d1';
 
 class Loadingscreen extends StatefulWidget {
   const Loadingscreen({super.key});
@@ -21,27 +21,31 @@ class Loadingscreen extends StatefulWidget {
 class _LoadingscreenState extends State<Loadingscreen> {
   double? latitude;
   double? longtide;
+  var weatherdata;
   @override
   void initState() {
     super.initState();
     getlocationData();
   }
 
- 
-
   void getlocationData() async {
+    Location location = Location();
+    await location.getlocation();
+
+    print(latitude);
+    print(longtide);
+
     Networking networking = Networking(
         Url:
-            'https://api.openweathermap.org/data/2.5/weather?lat=33.8&lon=122.0&appid=aaee36e539a3634b5a211876369ca3d1&units=metric');
-    Location location = Location();
-    var location1 = await location.getlocation();
-    print(location1);
+            'https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$apikey&units=metric');
     var weatherdata = await networking.getweatherdata();
-   
-    var data = jsonDecode(weatherdata)['main']['temp'];
-    print(data);
+    
+    print(weatherdata);
+
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ResultPage(weatherdata: weatherdata)));
+        context,
+        MaterialPageRoute(
+            builder: (context) => ResultPage(weatherdata: weatherdata)));
   }
 
   @override

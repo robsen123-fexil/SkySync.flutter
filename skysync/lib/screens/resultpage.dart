@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_import, unused_local_variable, prefer_typing_uninitialized_variables, non_constant_identifier_names, avoid_print
+// ignore_for_file: prefer_const_constructors, unnecessary_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_import, unused_local_variable, prefer_typing_uninitialized_variables, non_constant_identifier_names, avoid_print, avoid_init_to_null
 
 import 'dart:convert';
 import 'dart:ui';
@@ -19,7 +19,8 @@ class ResultPage extends StatefulWidget {
 
 class _ResultPageState extends State<ResultPage> {
   WeatherModel weathermodel = WeatherModel();
-  int? tempreture;
+
+  late int tempreture;
   double? feels;
   int? maximum;
   int? minimum;
@@ -30,6 +31,7 @@ class _ResultPageState extends State<ResultPage> {
   String? cityname;
   String? description;
   String? weathericon;
+  String? image;
   late int cond;
   @override
   void initState() {
@@ -38,13 +40,29 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   void Updateui(dynamic weatherdata) {
-    double temp = jsonDecode(weatherdata)['main']['temp'];
-    tempreture = temp.toInt();
+    if (weatherdata == null) {
+      print("Weather data is null. Handling null weather data...");
+      // Handle null weather data
+      tempreture = 0;
+      feels = 0;
+      maximum = 0;
+      minimum = 0;
+      humudity = 0;
+      visiblity = 0;
+      speed = 0;
+      description = "Check your connection";
+      pressure = 0;
+      cond = 0;
+      weathericon = "null";
+      image = "null";
+      return; // Exit the method if weatherdata is null
+    }
+
+    // Populate data from weatherdata
+    tempreture = jsonDecode(weatherdata)['main']['temp'].toInt();
     feels = jsonDecode(weatherdata)['main']['feels_like'];
-    double max = jsonDecode(weatherdata)['main']['temp_max'];
-    maximum = max.toInt();
-    double min = jsonDecode(weatherdata)['main']['temp_min'];
-    minimum = min.toInt();
+    maximum = jsonDecode(weatherdata)['main']['temp_max'].toInt();
+    minimum = jsonDecode(weatherdata)['main']['temp_min'].toInt();
     humudity = jsonDecode(weatherdata)['main']['humidity'];
     visiblity = jsonDecode(weatherdata)['visibility'];
     speed = jsonDecode(weatherdata)['wind']['speed'];
@@ -54,6 +72,8 @@ class _ResultPageState extends State<ResultPage> {
     cond = jsonDecode(weatherdata)['weather'][0]['id'];
 
     weathericon = weathermodel.getWeatherIcon(cond);
+    image = weathermodel.getImage(tempreture);
+    print(image);
   }
 
   @override
@@ -82,7 +102,7 @@ class _ResultPageState extends State<ResultPage> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('images/download.jpeg'),
+            image: AssetImage('$image'),
             fit: BoxFit.cover,
           )),
           child: Column(
@@ -94,11 +114,11 @@ class _ResultPageState extends State<ResultPage> {
                 style: TextStyle(
                     fontSize: 60,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 6, 6, 6)),
+                    color: Color.fromARGB(255, 250, 247, 247)),
               ),
               Text("$description",
                   style: TextStyle(
-                      fontSize: 30, color: Color.fromARGB(255, 0, 0, 0))),
+                      fontSize: 30, color: Color.fromARGB(255, 245, 245, 245))),
               Row(
                 children: [
                   Expanded(
