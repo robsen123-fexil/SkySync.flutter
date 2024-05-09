@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, unused_element, prefer_const_constructors, unused_import, unused_local_variable, avoid_print
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -51,11 +53,13 @@ class WeatherModel {
     }
   }
 
-  Future getweatherbycity(Future cityname) async {
-    String? cityname;
+  Future<dynamic> getweatherbycity(String cityname) async {
+    
     http.Response response = await http.get(Uri.parse(
         'https://api.openweathermap.org/data/2.5/weather?q=$cityname&appid=$apikey&units=metric'));
-    print(response.body);
-    return response.body;
+
+    var data = response.body;
+    var decodedata = jsonDecode(data);
+    return data;
   }
 }

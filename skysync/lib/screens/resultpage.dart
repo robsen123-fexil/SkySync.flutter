@@ -40,42 +40,46 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   void Updateui(dynamic weatherdata) {
-    if (weatherdata == null) {
-      print("Weather data is null. Handling null weather data...");
-      // Handle null weather data
-      tempreture = 0;
-      feels = 0;
-      maximum = 0;
-      minimum = 0;
-      humudity = 0;
-      visiblity = 0;
-      speed = 0;
-      description = "Check your connection";
-      pressure = 0;
-      cond = 0;
-      weathericon = "null";
-      image = "null";
-      return; // Exit the method if weatherdata is null
-    }
+    setState(() {
+      if (weatherdata == null) {
+        print("Weather data is null. Handling null weather data...");
+        // Handle null weather data
+        tempreture = 0;
+        feels = 0;
+        maximum = 0;
+        minimum = 0;
+        humudity = 0;
+        visiblity = 0;
+        speed = 0;
+        description = "Check your connection";
+        pressure = 0;
+        cond = 0;
+        weathericon = "null";
+        image = "null";
+        return; // Exit the method if weatherdata is null
+      }
 
-    // Populate data from weatherdata
-    tempreture = jsonDecode(weatherdata)['main']['temp'].toInt();
-    feels = jsonDecode(weatherdata)['main']['feels_like'];
-    maximum = jsonDecode(weatherdata)['main']['temp_max'].toInt();
-    minimum = jsonDecode(weatherdata)['main']['temp_min'].toInt();
-    humudity = jsonDecode(weatherdata)['main']['humidity'];
-    visiblity = jsonDecode(weatherdata)['visibility'];
-    speed = jsonDecode(weatherdata)['wind']['speed'];
-    cityname = jsonDecode(weatherdata)['name'];
+      
+      // Populate data from weatherdata
+      tempreture = jsonDecode(weatherdata)['main']['temp'].toInt();
+      feels = jsonDecode(weatherdata)['main']['feels_like'];
+      maximum = jsonDecode(weatherdata)['main']['temp_max'].toInt();
+      minimum = jsonDecode(weatherdata)['main']['temp_min'].toInt();
+      humudity = jsonDecode(weatherdata)['main']['humidity'];
+      visiblity = jsonDecode(weatherdata)['visibility'];
+      speed = jsonDecode(weatherdata)['wind']['speed'];
+      cityname = jsonDecode(weatherdata)['name'];
 
-    pressure = jsonDecode(weatherdata)['main']['pressure'];
-    cond = jsonDecode(weatherdata)['weather'][0]['id'];
+      pressure = jsonDecode(weatherdata)['main']['pressure'];
+      cond = jsonDecode(weatherdata)['weather'][0]['id'];
 
-    weathericon = weathermodel.getWeatherIcon(cond);
-    image = weathermodel.getImage(tempreture);
+      weathericon = weathermodel.getWeatherIcon(cond);
+      image = weathermodel.getImage(tempreture);
 
-    description = weathermodel.getMessage(tempreture);
-    print(image);
+      description = weathermodel.getMessage(tempreture);
+      print(image);
+    });
+
   }
 
   @override
@@ -88,17 +92,16 @@ class _ResultPageState extends State<ResultPage> {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () {
-                setState(() {
-                  var cityname = Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchCity()));
+              onPressed: () async {
+                var cityname = await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchCity()));
 
-                  if (cityname != null) {
-                    var cityweather = weathermodel.getweatherbycity(cityname);
-                    Updateui(cityweather);
-                    print(cityweather);
-                  }
-                });
+                if (cityname != null) {
+                  var cityweather =
+                      await weathermodel.getweatherbycity(cityname);
+                  Updateui(cityweather);
+                  print(cityweather);
+                }
               },
               icon: Icon(
                 Icons.search,
