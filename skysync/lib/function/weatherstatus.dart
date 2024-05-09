@@ -1,7 +1,10 @@
-// ignore_for_file: non_constant_identifier_names, unused_element, prefer_const_constructors, unused_import
+// ignore_for_file: non_constant_identifier_names, unused_element, prefer_const_constructors, unused_import, unused_local_variable, avoid_print
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+const apikey = 'aaee36e539a3634b5a211876369ca3d1';
 
 class WeatherModel {
   String getWeatherIcon(int condition) {
@@ -46,5 +49,13 @@ class WeatherModel {
     } else {
       return 'images/pexels-reneasmussen-25763.jpg';
     }
+  }
+
+  Future getweatherbycity(Future cityname) async {
+    String? cityname;
+    http.Response response = await http.get(Uri.parse(
+        'https://api.openweathermap.org/data/2.5/weather?q=$cityname&appid=$apikey&units=metric'));
+    print(response.body);
+    return response.body;
   }
 }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:skysync/screens/resultpage.dart';
 import 'package:skysync/screens/loading.dart';
+import 'package:skysync/screens/search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,8 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
-      home: Loadingscreen(),
+      home: Loadingscreen()
     );
   }
 }

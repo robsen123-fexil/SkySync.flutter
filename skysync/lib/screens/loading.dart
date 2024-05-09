@@ -34,7 +34,7 @@ class _LoadingscreenState extends State<Loadingscreen> {
 
     print(latitude);
     print(longtide);
-
+   
     Networking networking = Networking(
         Url:
             'https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$apikey&units=metric');
