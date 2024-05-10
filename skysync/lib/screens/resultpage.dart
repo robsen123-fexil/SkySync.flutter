@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_import, unused_local_variable, prefer_typing_uninitialized_variables, non_constant_identifier_names, avoid_print, avoid_init_to_null, unnecessary_null_comparison
+import 'package:intl/intl.dart';
 import 'package:skysync/screens/search.dart';
 import 'dart:convert';
 import 'dart:ui';
@@ -33,6 +34,8 @@ class _ResultPageState extends State<ResultPage> {
   String? weathericon;
   String? image;
   late int cond;
+  late DateTime now;
+  String? formattedTime;
   @override
   void initState() {
     super.initState();
@@ -56,10 +59,10 @@ class _ResultPageState extends State<ResultPage> {
         cond = 0;
         weathericon = "null";
         image = "null";
+        
         return; // Exit the method if weatherdata is null
       }
 
-      
       // Populate data from weatherdata
       tempreture = jsonDecode(weatherdata)['main']['temp'].toInt();
       feels = jsonDecode(weatherdata)['main']['feels_like'];
@@ -69,17 +72,15 @@ class _ResultPageState extends State<ResultPage> {
       visiblity = jsonDecode(weatherdata)['visibility'];
       speed = jsonDecode(weatherdata)['wind']['speed'];
       cityname = jsonDecode(weatherdata)['name'];
-
       pressure = jsonDecode(weatherdata)['main']['pressure'];
       cond = jsonDecode(weatherdata)['weather'][0]['id'];
-
       weathericon = weathermodel.getWeatherIcon(cond);
       image = weathermodel.getImage(tempreture);
-
       description = weathermodel.getMessage(tempreture);
-      print(image);
+      now = DateTime.now();
+      formattedTime = DateFormat('h:mm a').format(now);
+      
     });
-
   }
 
   @override
@@ -331,12 +332,12 @@ class _ResultPageState extends State<ResultPage> {
                 children: [
                   SizedBox(width: 40),
                   Text(
-                    "Sunrise:",
+                    "clock:",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   SizedBox(width: 17),
                   Text(
-                    "3:35",
+                    '$formattedTime',
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   SizedBox(width: 15),
@@ -345,24 +346,6 @@ class _ResultPageState extends State<ResultPage> {
                   //   size: 50,
                   //   color: Colors.yellow,
                   // ),
-                  Text(
-                    weathericon!,
-                    style: TextStyle(fontSize: 20),
-                  ),
-
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "Sunset",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  SizedBox(width: 15),
-                  Text(
-                    "7:75",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  SizedBox(width: 10),
                 ],
               ),
             )

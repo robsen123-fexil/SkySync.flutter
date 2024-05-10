@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_import, unused_local_variable, prefer_typing_uninitialized_variables, non_constant_identifier_names, avoid_print, avoid_init_to_null, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, unnecessary_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_import, unused_local_variable, prefer_typing_uninitialized_variables, non_constant_identifier_names, avoid_print, avoid_init_to_null, unnecessary_null_comparison, file_names
 import 'package:skysync/screens/search.dart';
 import 'dart:convert';
 import 'dart:ui';
@@ -327,44 +327,7 @@ class _ResultPageState extends State<ResultPage> {
                 color: Colors.black.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Row(
-                children: [
-                  SizedBox(width: 40),
-                  Text(
-                    "Sunrise:",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  SizedBox(width: 17),
-                  Text(
-                    "3:35",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  SizedBox(width: 15),
-                  // Icon(
-                  //   Icons.icon,
-                  //   size: 50,
-                  //   color: Colors.yellow,
-                  // ),
-                  Text(
-                    weathericon!,
-                    style: TextStyle(fontSize: 20),
-                  ),
-
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "Sunset",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  SizedBox(width: 15),
-                  Text(
-                    "7:75",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  SizedBox(width: 10),
-                ],
-              ),
+              
             )
           ],
         ),
